@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>web localStorage</title>
+</head>
+<body>
+<input type="text" name="" id="name" placeholder="输入名字">
+<input type="text" name="" id="email" placeholder="输入邮箱">
+<input type="button" name="" onclick="saveSyorage()" value="添加">
+<p id="txt"></p>
+<input type="text" name="" id="find">
+<input type="button" name="" onclick="findStorage('txt')" value="检索">
+</body>
+</html>
+<script type="text/javascript">
+	function saveSyorage() {
+		var data=new Object;
+		data.name = document.getElementById('name').value;
+		data.email = document.getElementById('email').value;
+		var str = JSON.stringify(data);//变成json格式
+		localStorage.setItem(data.name,str)//键值对 key,value
+		alert('数据已经保存')
+	}
+	//找到的数据
+	function findStorage(id){
+		var find=document.getElementById('find').value;
+		var str=localStorage.getItem(find);//通过他来寻找
+		var data=JSON.parse(str);//解析json
+		var resylt="名字:"+data.name+"<br>"
+		resylt+="邮箱:"+data.email;
+		var target= document.getElementById(id);
+		target.innerHTML=resylt;
+	}
+</script>

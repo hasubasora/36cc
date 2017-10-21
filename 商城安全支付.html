@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>商城安全支付</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script type="application/json" src="json/shouye.json"></script>
+    <script src="js/jquery-2.2.1.min.js" ></script>
+
+    <style>
+    body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header  class="backG">
+    <h1 class="h1history"><a href="javascript:history.go(-1)" class="iconfont floatL">&#xe619;</a>商城安全支付</h1>
+</header>
+<section >
+   <div class="shopPay backG">
+       <p><i class="iconfont" style="color: #00CC66">&#xe62d;</i>订单已经生成</p>
+       <p>(请支付订单完成交易)</p>
+       <p>订单金额:<strong class="Red">10.00元</strong></p>
+   </div>
+</section>
+<section >
+    <ul class="shopPay">
+        <li class="backG">选着支付方式</li>
+        <li class="backG lipay cur">
+            <i class="iconfont" style="color: #00CC66">&#xe62b;</i>
+            <font style="vertical-align: top;">微信支付</font>
+            <b class="iconfont duiDe0" style="display: block">&#xe629;</b>
+            <b class="duiDe" ></b>
+        </li>
+        <li class="backG lipay cur">
+            <i class="iconfont" style="color: #2FB2E6">&#xe62c;</i>
+            <font style="vertical-align: top;">支付宝</font>
+            <b class="iconfont duiDe0">&#xe629;</b>
+            <b class="duiDe" style="display: block"></b>
+        </li>
+
+    </ul>
+</section>
+<footer class="fBtn">
+    <strong class="btnStr"><input class="outBtn" type="submit" value="确定"></strong>
+</footer>
+<script>
+$('li.lipay').bind('touchstart',function () {
+//    点击自己，对方的第一个b隐藏显示第二个b，自己的第一个b显示隐藏第二个b
+    console.log(111)
+    $(this).siblings('li.lipay').find('b.duiDe').show().siblings('b.duiDe0').hide();
+    $(this).find('b.duiDe0').show().siblings('b.duiDe').hide();
+
+
+});
+</script>
+</body>
+</html>

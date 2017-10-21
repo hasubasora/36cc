@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+      <script src="js/jquery-2.2.1.min.js" ></script>
+</head>
+<body>
+<script type="text/javascript">
+//加载分类商品
+    var data = new Object;
+    data.uid = "UIC000000000000000001462";
+    data.sid = "91546ebc4ed846006dea109eeb137c1a";
+    var jsonObj = {
+        //session信息，和发的数据一样
+        "session": {
+            "uid": data.uid,
+            "sid": data.sid
+        }
+    }
+    var str = JSON.stringify(data);//变成json格式
+    localStorage.setItem("session", str);//键值对 key,value
+
+//,"store_id":"24620"  首页用
+//var jsonObj={"pagination":{"count":10,"page":1},"type":"await_pay","session":{"uid":"UIC000000000000000001462","sid":"91546ebc4ed846006dea109eeb137c1a"},"store_id":"24620","order_id":"14755"}
+                 var filter = getJsonObj(options);
+            
+        // $.ajax({
+        //       type: 'get',
+        //       async: true,
+        //       url:'json/tsconfig.json',
+        //       dataType:'json',
+        //      // data:'uid'
+        //       jsonp:'cbname', //指定参数名称=栗子（指定参数名称=参数值）
+        //       jsonpCallback:'cbfun', //参数值，？是随机值
+        //       success:function(data){
+        //          if (data.status.succeed==1){
+        //         console.log(data.data.session);
+        //          _data=data.data;
+        //         console.log(_data.user_info);
+        //         console.log(_data.user_info.store_id);
+        //          loginInfo=_data.session;
+
+                  //console.log(loginInfo.uid);
+               
+              //  }
+              // }
+// })
+             function getJsonObj(options){
+                 var loginInfo = options;
+                 var uid = loginInfo.uid;
+                 var sid = loginInfo.sid;
+                 var jsonObj = {
+                     //session信息，和发的数据一样
+                     "session": {
+                         "uid": uid,
+                         "sid": sid  
+                     }
+                 };
+                  console.log(jsonObj)
+                 for(var key in options){
+                   console.log(options[key])
+                     jsonObj[key] = options[key];
+                 }
+                  console.log(jsonObj[key])
+                 //将发送的数据放到filter变量中
+                 var filter = new Object();
+                 filter.json = JSON.stringify(jsonObj);
+                 return filter;
+             }
+</script>
+</body>
+</html>

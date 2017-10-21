@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>历史订单</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script type="application/json" src="json/shouye.json"></script>
+    <script src="js/jquery-2.2.1.min.js" ></script>
+
+    <style>
+    body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header  class="backG" style="box-shadow: 0 0 1px 0;  margin-bottom: 15px;">
+    <h1 class="h1history"><a  href="javascript:void
+    (0)" onclick="history.go(-1)" class="iconfont floatL">&#xe619;</a>历史订单</h1>
+</header>
+
+<section class="backG" >
+        <ul class="history clearfix">
+            <li><span class="floatR">在线支付</span><span>订单编号:12312312312312</span></li>
+            <li><span class="floatR">已取消</span><span>成交时间:2000-22-22-12:22:33</span></li>
+            <li class="cqGoodsList"><a href="">
+                <p class="floatR"><span class="">￥10.00元</span><span>x1</span></p>
+                <img width="50" height="50">
+                <p class="historyTitle">标题十五字标题十五字标题十五字</p>
+                </a>
+            </li>
+            <li><span>运输费</span><span class="floatR">￥10.00元</span></li>
+            <li><a href="" class="floatR returnOfGoods">退货换货</a><a href="" class="floatR logistics">查看物流</a><span>实际付款<strong style="color: red">￥10.00元</strong></span></li>
+        </ul>
+    <div style="clear: both"></div>
+    <ul class="history">
+        <li><span class="floatR">在线支付</span><span>订单编号:12312312312312</span></li>
+        <li><span class="floatR">已取消</span><span>成交时间:2000-22-22-12:22:33</span></li>
+        <li class="cqGoodsList"><a href="">
+            <p class="floatR"><span class="">￥10.00元</span><span>x1</span></p>
+            <img width="50" height="50">
+            <p class="historyTitle">标题十五字标题十五字标题十五字</p>
+        </a>
+        </li>
+        <li><span>运输费</span><span class="floatR">￥10.00元</span></li>
+        <li><a href="" class="floatR returnOfGoods">退货换货</a><a href="" class="floatR logistics">查看物流</a><span>实际付款<strong style="color: red">￥10.00元</strong></span></li>
+    </ul>
+</section>
+
+<nav class="nav">
+    <a class="iconfont " >&#xe615;<p>首页</p></a>
+    <a class="iconfont" >&#xe60c;<p>服务卡</p></a>
+    <a class="iconfont action" >&#xe617;<p>个人中心</p></a>
+</nav>
+<script>
+    var jsonObj= {"pagination":{"count":10,"page":1},"type":"finished","session":{"uid":"UIC000000000000000001462","sid":"91546ebc4ed846006dea109eeb137c1a"}}
+    var filter= new Object();
+    filter.json=JSON.stringify(jsonObj);
+    $.ajax({
+        type: 'get',
+        async: false,
+        url:'http://120.24.87.209/server/?url=/order/list',
+        data: filter,
+        dataType: 'jsonp',
+        jsonp: "jsoncallback",
+        success: function(data) {
+            console.log(data);
+        }
+    })
+</script>
+</body>
+</html>

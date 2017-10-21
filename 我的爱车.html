@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>我的爱车</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script src="js/jquery-2.2.1.min.js" ></script>
+    <script src="js/box.js"></script>
+
+    <style>
+    body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header class="backG headerBm">
+    <h1 class="h1history"><a  href="javascript:void
+    (0)" onclick="history.go(-1)" class="iconfont floatL">&#xe619;</a>我的爱车</h1><a href="" class="iconfont floatR aIco">&#xe62a;</a>
+</header>
+
+<section>
+    <ul class="picShow picShow2">
+        <li>车辆列表</li>
+        <!--循环添加的列表-->
+        <!--<li class="myCarDef headerBm id2" >-->
+            <!--<dl class="myCar clearfix">-->
+                <!--<dt class="myCarPic floatL"><img width="80" height="80"></dt>-->
+                <!--<dd class="floatL">-->
+                    <!--<p>车牌啊车牌啊车</p>-->
+                    <!--<p>车辆名称车辆名称车</p>-->
+                    <!--<p>备注备注备注备</p>-->
+                <!--</dd>-->
+                <!--<dd class="floatR">-->
+                    <!--<span class="iconfont">&#xe627;</span>-->
+                    <!--<b class="iconfont cur">&#xe622;</b>-->
+                    <!--<b class="iconfont cur delCar">&#xe623;</b>-->
+                <!--</dd>-->
+            <!--</dl>-->
+        <!--</li>-->
+        <!--循环添加的列表-->
+
+    </ul>
+</section>
+</body>
+</html>
+<script>
+    $('.delCar').bind('touchstart',function () {
+        $(this).parent('.myCarDef').remove();
+    });
+    var url='http://120.24.87.209/index.php?s=/swche/car/carList';
+    $.ajax({
+        type: 'post',
+        async: false,
+        url:url,
+        data: filter,
+        dataType: 'jsonp',
+        jsonp: "jsoncallback",
+        success: function(data) {
+            console.log(data);
+            //服务器返回响应，根据响应结果，分析是否登录成功；
+            var status = data.status;
+            CarInfo=[];
+            isDef="";
+            //如果有car_info
+            if (status.succeed == 1) {
+                data = data.data;
+                console.log(data.length);
+
+                for (var i=0;i<data.length;i++){
+                    console.log(data[i]);
+                   var CarName = data[i].car_name;//"车辆名字"
+                   var CarNo=data[i].car_no;//"车牌号"
+                   var CarId= data[i].id;// "12"
+                   isDef=data[i].is_default;//"0"
+                   var carDesc=data[i].car_desc;//备注
+
+                    CarInfo.push(
+                        '<li class="myCarDef headerBm backG" data-id="CarId">'+
+                        '<dl class="myCar clearfix">'+
+                        '<dt class="myCarPic floatL"><img width="80" height="80"></dt>'+
+                        '<dd class="floatL">'+
+                        '<p>'+CarNo+'</p>'+
+                        '<p>'+CarName+'</p>'+
+                        '<p>'+carDesc+'</p>'+
+                        '</dd>'+
+                        '<dd class="floatR ">'+
+                        '<span class="iconfont isDef" data-isDef="'+isDef+'">&#xe627;</span>'+
+                        '<b class="iconfont cur">&#xe622;</b>'+
+                        '<b class="iconfont cur delCar">&#xe623;</b>'+
+                        '</dd>'+
+                        '</dl>'+
+                        '</li>'
+                    );
+
+                    if (isDef==1){
+//                        console.log( $('.isDef').attr('data-isDef'))
+                    }
+                }
+                appEndHtml($('.picShow'),CarInfo);
+
+            }else{
+                mui.toast(data.status.error_desc);
+            }
+        },
+        error: function(xhr, type, errorThrown) {
+            //异常处理；
+            alert(type);
+        }
+    });
+
+
+</script>

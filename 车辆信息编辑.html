@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>车辆信息编辑</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script type="application/json" src="json/shouye.json"></script>
+    <script src="js/jquery-2.2.1.min.js" ></script>
+    <style>
+      body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header class="backG headerBm">
+    <h1 class="h1history"><a href="" class="iconfont floatL">&#xe619;</a>车辆信息编辑</h1>
+</header>
+
+<section>
+    <ul class="clearfix buyGoods carInfo">
+        <li class="picShowI backG cur"><span>车辆照片</span>
+            <a class="license">
+                <img id="img-1" src="images/logo_n.png">
+            </a>
+            <input id="file0" class="file-3" type="file" size="30" onchange="setImagePreview((this.value))" accept="image/*" capture="camera">
+            <!--预览-->
+            <div class="yulan">
+                <img src="" id="img0">
+                <div class="enter">
+                    <button class="btn-2 floatL">取消</button>
+                    <button class="btn-3 floatR">确定</button>
+                </div>
+            </div>
+        </li>
+        <script>
+
+            $("#file0").change(function(){
+                var objUrl = getObjectURL(this.files[0]) ;
+                obUrl = objUrl;
+                console.log("objUrl = "+objUrl) ;
+                if (objUrl) {
+                    $("#img0").attr("src", objUrl).show();
+                }
+                else{
+                    $("#img0").hide();
+                }
+            }) ;
+
+            function qd(){
+                var objUrl = getObjectURL(this.files[0]) ;
+                obUrl = objUrl;
+                console.log("objUrl = "+objUrl) ;
+                if (objUrl) {
+                    $("#img0").attr("src", objUrl).show();
+                }
+                else{
+                    $("#img0").hide();
+                }
+            }
+            function getObjectURL(file) {
+                var url = null ;
+                if (window.createObjectURL!=undefined) { // basic
+                    url = window.createObjectURL(file) ;
+                } else if (window.URL!=undefined) { // mozilla(firefox)
+                    url = window.URL.createObjectURL(file) ;
+                } else if (window.webkitURL!=undefined) { // webkit or chrome
+                    url = window.webkitURL.createObjectURL(file) ;
+                }
+                return url ;
+            }
+
+            var subUrl = "";
+            $(function (){
+                $(".file-3").bind('change',function(){
+                    subUrl = $(this).val();
+                    $(".yulan").show();
+                    $(".file-3").val("");
+                });
+
+                $(".file-3").each(function(){
+                    if($(this).val()==""){
+                        $(this).parents(".uploader").find(".filename").val("车图片");
+                    }
+                });
+                $(".btn-3").click(function(){
+                    $("#img-1").attr("src", obUrl);
+                    $(".yulan").hide();
+                    $(".file-3").parents(".uploader").find(".filename").val(subUrl);
+                })
+                $(".btn-2").click(function(){
+                    $(".yulan").hide();
+                })
+            });
+            //上传文件的代码
+            function setImagePreview(thisVal) {
+                // body...
+                var flag = false;
+                var arr=['gif','jpg','png','jpeg','bmp'];
+                var thv=thisVal.lastIndexOf('.');
+                //从后面找到点，他在第几位。
+                var ect=thisVal.substr(thv+1);
+                //加一就是排除.值要后面的的值。不加1就会带上点
+                console.log(thv,ect);
+                for (var i = 0; i < arr.length; i++) {
+                    if (ect==arr[i]) { //如果有一样的话
+                        flag = true; //把他变成真
+                        break;
+                    }
+                }
+                //不等于假，就是真的就判断
+                if (!flag) {
+                    alert('文件类型错误，请重新上传')
+                }
+            }
+
+
+        </script>
+
+        <li class="backG "><span>车辆号码</span><input autofocus type="text" placeholder="车辆型号等"></li>
+        <li class="backG "><span>车辆名称</span><input type="text" placeholder="输入车牌型号"></li>
+        <li class="backG "><span>备注</span><input type="text" placeholder="备注"></li>
+        <li class="backG cur"><span>是否设置为默认车辆</span><b class="iconfont strongDef">&#xe625;</b></li>
+<script>
+    var def=0;
+    $('.strongDef').bind('touchstart',function () {
+        var sOgf="&#xe624;";
+        var sDef='&#xe625;';
+        if (def==0) {
+            $(this).html(sOgf).css('color', 'orange');
+            def=1;
+        }else{
+            $(this).html(sDef).css('color', '#000');
+            def=0;
+        }
+    });
+</script>
+    </ul>
+    <strong class="btnStr"><input class="outBtn" type="button" value="确定"></strong>
+</section>
+</body>
+</html>

@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>门店介绍</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script src="js/jquery-2.2.1.min.js" ></script>
+    <script src="js/box.js"></script>
+    <style>
+    body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header class="backG headerBm">
+    <h1 class="h1history"><a  href="javascript:void
+    (0)" onclick="history.go(-1)" class="iconfont floatL">&#xe619;</a>门店介绍</h1>
+</header>
+
+<section class="shopTitle">
+    <a href="#" class="imgTo"><img class="topImg" src=""><span class="titleShop"></span></a>
+</section>
+<aside class="apoTel backG">
+    <p><i class="iconfont">&#xe61e;&nbsp;</i><span class="telNum"></span>&nbsp;<span  class="nameTel">陈先生</span></p>
+    <a class="picShowU" ><i class="iconfont">&#xe613;&nbsp;</i><span class="address"></span></a>
+</aside>
+<hgroup class="shopList backG">
+<p><span class="provisionOfService">提供的服务</span></p>
+
+</hgroup>
+<hgroup class="shopIntroducer backG">
+<p><span class="provisionOfService">店面介绍</span></p>
+    <span class="shopPro"></span>
+<figure><img src="img/erweima.png"></figure>
+    <figure><a href="javascript:void(0)" onclick="navtiveShare()" class="btn"> <i class="fa icon-share">分享</i></a></figure>
+</hgroup>
+<script>
+    var jsonObj={"store_id":"24620","session":{"uid":"UIC000000000000000001462","sid":"2bf75bb18d014c21fec5ba12f0752ebc"}};
+    var filter= new Object();
+    filter.json=JSON.stringify(jsonObj);
+    var URL='http://swshop.sunaw.com/index.php?s=/Swche/Store/storeDetailInfo&jsoncallback=jQuery111107377920988947153_1465976620240&json=%7B%22store_id%22%3A%2224620%22%2C%22session%22%3A%7B%22uid%22%3A%22UIC000000000000000001462%22%2C%22sid%22%3A%222bf75bb18d014c21fec5ba12f0752ebc%22%7D%7D&_=1465976620241';
+    $.ajax({
+        type: 'post',
+        async: false,
+        url:URL,
+        data: filter,
+        dataType: 'jsonp',
+        jsonp: "jsoncallback",
+        success: function(data) {
+            console.log(data);
+            //服务器返回响应，根据响应结果，分析是否登录成功；
+            var status = data.status;
+            provision=[];
+            if (status.succeed == 1) {
+                data = data.data;
+                console.log(data);
+                address = data.address;// "广东省深圳市龙华新区观澜观光路"
+                admin_id = data.admin_id;//"134"
+                contact= data.contact;//"陈先生"
+                logo= data.logo;//"http://112.90.128.18:35036/0e28eca8acc1648306311ec61f799606"
+                mobilephone=data.mobilephone;//"13553389403"
+                name=data.name;//"喜得来高端汽车美容养护中心"
+                services= data.services;//Array[8]
+                store_desc=data.store_desc;//"专注于汽车装饰，汽车美容，汽车精洗，保险年检"
+                $('.topImg').attr('src',logo);
+                apptxt($('.shopPro'),store_desc);
+                apptxt($('.telNum'),mobilephone);
+                apptxt($('.nameTel'),contact);
+                apptxt($('.titleShop'),name);
+                apptxt($('.address'),address);
+                for (var i=0;i<services.length;i++){
+                    provision.push('<span>'+services[i].name+'</span>');
+                }
+                appEndHtml($('.shopList'),provision.join(" "));
+            }else{
+                mui.toast(data.status.error_desc);
+            }
+        },
+        error: function(xhr, type, errorThrown) {
+            //异常处理；
+            alert(type);
+        }
+    });
+
+
+//    var filter = new Object();
+//    var storeInfo = new Object();
+//    var jsonObj = {
+//        "store_id": '',
+//        "session": {
+//            "uid": '',
+//            "sid": ''
+//        }
+//    };
+   // filter.json = JSON.stringify(jsonObj);
+
+//    $(function() {
+//        $.ajax({
+//            type: "get",
+//            url:'/index.php?s=/Swche/Store/storeDetailInfo',
+//            dataType: 'jsonp',
+//            jsonp: "jsoncallback",
+//            data: filter,
+//            success: function(data) {
+//                //						console.info(data);
+//                storeInfo = data.data;
+//                setStoreInfo(data.data);
+//                //						alert('yyy');
+//            },
+//            error: function() {
+//                alert('fail');
+//            }
+//        });
+//        //setStoreInfo();
+//    });
+//$('.btn').bind('touchstart',function () {
+//    navtiveShare()
+//});
+//
+//    function navtiveShare() {
+//        //调用分享接口
+//        var title = '分享' + storeInfo.name;
+//        var desc = "店铺名称：" + storeInfo.name + "\n" + "店铺地址：" + storeInfo.address;
+//        var link = "http://swshop.sunaw.com//index.php?s=/h5/CloudUserBind/newUser.html&info=57554b1693002";
+//        var imgUrl = storeInfo.logo;
+//        var callback = null;
+//        var err_callback = null;
+//        shareMessage(title, desc, link, imgUrl, callback, err_callback);
+//    }
+//
+//    function setStoreInfo(storeInfo) {
+//        console.info(storeInfo);
+//        var realImgHeight = 0;
+//        var browserWidth = $(window).width();
+//        $("<img/>").attr("src", storeInfo.logo).load(function() {
+//            realImgHeight = this.height;
+//            console.info("realImgHeight" + realImgHeight);
+//            console.info("imgWidth" + this.width);
+//            var topHeight = browserWidth * realImgHeight / this.width;
+//            var infoHeight = topHeight * 40 / 250;
+//            console.info("topHeight" + topHeight);
+//            $('.poi-info').css({
+//                "top": topHeight - infoHeight,
+//                "height": infoHeight,
+//                "line-height": infoHeight + 'px'
+//            });
+//            $('.poi-banner').css({
+//                "height": topHeight
+//            });
+//            $('#header_img').attr("src", storeInfo.logo).css({
+//                "height": topHeight
+//            });
+//        });
+//        if (storeInfo.logo == '') {
+//            $('.poi-banner').css('display', 'none');
+//        }
+//        $("#store_name").text(storeInfo.name);
+//        $("#store_contact").html('<a target="_blank" href="tel:'+storeInfo.mobilephone + '">'+storeInfo.mobilephone+'</a> ' + storeInfo.contact);
+//        $('#store_address').text(storeInfo.address);
+//        if (storeInfo.store_desc != null) {
+//            $('#store_brief').text(storeInfo.store_desc);
+//        }
+//        if (storeInfo.services != null) {
+//            for (var i = 0; i < storeInfo.services.length; i++) {
+//                $('#services').append('<li> <span class="serives_btn">' + storeInfo.services[i].name + '</li>');
+//            }
+//        }
+//        $('#map_href').attr('href', "/index.php?s=/H5/map/showMap" + "&lng=" + storeInfo.lng + "&lat=" + storeInfo.lat + "&address=" + storeInfo.address);
+//        $('#qrcode').attr('src', "/index.php?s=/Shop/Qrcode/swCheStore" + "/admin_id/" + storeInfo.admin_id);
+//    }
+</script>
+</body>
+</html>

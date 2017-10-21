@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>切换店铺</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script src="js/jquery-2.2.1.min.js" ></script>
+    <script src="js/box.js" ></script>
+
+    <style>
+        body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header class="backG headerBm">
+    <h1 class="h1history"><a href="javascript:void(0)" onclick="javascript:history.go(-1)" class="iconfont floatL">&#xe619;</a>切换店铺</h1>
+</header>
+
+<section id="switchShop">
+    <ul class="clearfix switchShop backG cur">
+        <li class="floatL"><img width="80" height="80"></li>
+        <li class="floatR">
+            <p>标题十五字标题十五字标题十五字</p>
+            <p>服务/服务/服务/服务...<span class="floatR">234公里</span></p>
+            <p>公司地址十五字</p>
+        </li>
+
+    </ul>
+</section>
+
+<script>
+    var jsonObj={"page_size":"10","lng":"113.341959","session":{"uid":"UIC000000000000000001462","sid":"2bf75bb18d014c21fec5ba12f0752ebc"},"page":"1","lat":"23.141575"}
+    var filter= new Object();
+    filter.json=JSON.stringify(jsonObj);
+    var URL='http://120.24.87.209/index.php?s=/swche/store/storeList';
+    $.ajax({
+        type: 'post',
+        async: false,
+        url:URL,
+        data: filter,
+        dataType: 'jsonp',
+        jsonp: "jsoncallback",
+        success: function(data) {
+            console.log(data);
+            //服务器返回响应，根据响应结果，分析是否登录成功；
+            var status = data.status;
+            addRessShop=[];
+            if (status.succeed == 1) {
+                data = data.data;
+                console.log(data[0].address);
+                for (var i=0; i<data.length;i++){
+//admin_id;//"134"
+//distance;//"未知"
+//lat;//"23.371808"
+//lng//"116.724535"
+                var address = data[i].address;//"广东省深圳市龙华新区观澜观光路"
+                var fullName = data[i].full_name;//"喜得来高端汽车美容养护中心"
+                var logo = data[i].logo;//"http://112.90.128.18:35036/0e28eca8acc1648306311ec61f799606"
+                var serviceDesc= data[i].service_desc;//"洗车/打蜡/抛光/室内蒸汽/补胎/四轮定位/钣金喷漆/更换机油、机滤"
+                addRessShop.push('<ul class="clearfix switchShop backG cur">'+
+                        '<li class="floatL"><img src="logo" width="80" height="80"></li>'+
+                        '<li class="floatR">'+
+                        '<p>'+fullName+'</p>'+
+                        '<p>'+serviceDesc+'<span class="floatR">234公里</span></p>'+
+                        '<p>'+address+'</p>'+
+                        '</li>'+'</ul>')
+                }
+                appEndHtml($('#switchShop'),addRessShop.join(" "));
+
+            }else{
+                mui.toast(data.status.error_desc);
+            }
+        },
+        error: function(xhr, type, errorThrown) {
+            //异常处理；
+            alert(type);
+        }
+    });
+
+
+
+</script>
+</body>
+</html>

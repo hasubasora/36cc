@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>修改昵称</title>
+    <link rel="stylesheet" type="text/css" href="css/big.css">
+    <script type="application/json" src="json/shouye.json"></script>
+    <script src="js/jquery-2.2.1.min.js" ></script>
+
+    <style>
+    body{ background: #F2F2F2}
+    </style>
+</head>
+<body>
+<header  class="backG">
+    <h1 class="h1history"><a  href="javascript:void
+    (0)" onclick="history.go(-1)" class="iconfont floatL">&#xe619;</a>修改昵称<a class="nameOk floatR">确定</a></h1>
+</header>
+<section class="backG setName" >
+    <input class="UserName" type="text" value="晨晨" placeholder="请输入昵称" autofocus> <b class="delName iconfont cur">&#xe62f;</b>
+</section>
+<p class="TextNo">2-20个字符可由中英文、数字、"_"、"-"组成</p>
+<script>
+    $('.delName').bind('touchstart',function () {
+        $('.UserName').val('');
+    });
+</script>
+
+
+</body>
+
+</html>
